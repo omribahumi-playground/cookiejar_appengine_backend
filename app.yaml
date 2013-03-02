@@ -1,0 +1,24 @@
+application: evmecookie
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /api/whoami
+  script: api.app
+  secure: always
+- url: /api/.*
+  script: api.app
+  login: required
+  secure: always
+- url: /cron/.*
+  script: cron.app
+  login: admin
+  secure: always
+- url: /
+  static_files: static/index.html
+  upload: static/(.*)
+- url: /(.*)
+  static_files: static/\1
+  upload: static/(.*)
